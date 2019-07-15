@@ -4,18 +4,19 @@
 class String
 {
 private:
+
 	char* data;
 
 public:
 
-	/**
-	* 函 数 名: String
-	* 说    明：普通构造函数(由字符常量)
-				语句【String str="123";】是调用此构造函数
-	* 参    数: const char * src -
-	* 返 回 值:
-	*/
-	String(const char* src)
+	//************************************
+	// Method:     String 
+	// Description: 普通构造函数(由字符常量)
+	//				语句【 String str = "123" 】是调用此构造函数
+	// Parameter:  const char * src - 
+	// Returns:     - 
+	//************************************
+	String(const char* src=NULL)
 	{
 		//复制src字符串的内容
 		if (src == NULL)
@@ -31,83 +32,183 @@ public:
 
 	}
 
-	/**
-	* 函 数 名: String
-	* 说    明：拷贝构造函数:拷贝构造函数是一种特殊的构造函数，函数的名称必须和类名称一致，它必须的一个参数是本类型的一个引用变量。
-				语句【String str1 = str2; 】是调用此函数
-	* 参    数: String & src -
-	* 返 回 值:
-	*/
-	String(String& src)
+	//************************************
+	// Method:     String 
+	// Description: 拷贝构造函数
+	//				拷贝构造函数是一种特殊的构造函数，函数的名称必须和类名称一致，它必须的一个参数是本类型的一个引用变量。
+	//				拷贝构造函数的调用时机：
+	//				1.当某函数的返回类型是该类对象。
+	//				2.当对象需要通过另外一个对象进行初始化。例如语句【String str2 = str】的str2对象的通过str对象初始化
+	// Parameter:  String & src - 
+	// Returns:     - 
+	//************************************
+	String(const String& src)
 	{
-		//复制src字符串的内容
-		if (src.data == NULL)
+		if (this != &src) 
 		{
-			this->data == NULL;
+			//复制src字符串的内容
+			if (src.data == NULL)
+			{
+				this->data == NULL;
+			}
+			else
+			{
+				this->data = (char*)malloc(strlen(src.data) + 1);	//加一是为了终止符'\0'
+				memset(this->data, 0x0, strlen(src.data) + 1);
+				strcpy(this->data, src.data);
+			}
 		}
-		else
-		{
-			this->data = (char*)malloc(strlen(src.data) + 1);	//加一是为了终止符'\0'
-			memset(this->data, 0x0, strlen(src.data) + 1);
-			strcpy(this->data, src.data);
-		}
+
 	}
 
-	/**
-	* 函 数 名: ~String
-	* 说    明：当对象生命周期结束时调用析构函数
-				在函数return时，存于栈内的对象自动调用析构函数，存于堆中的对象(即new出来的)需要手动delete
-	* 返 回 值:
-	*/
+	//************************************
+	// Method:     ~String 
+	// Description: 析构函数
+	//				当对象生命周期结束时调用(当函数return时，存于栈内的对象自动调用析构函数，存于堆中的对象(即new出来的)需要手动delete)
+	// Returns:     -  
+	//************************************
 	~String()
 	{
 		free(this->data);
 		data = NULL;
 	}
 
-	//重载运算符：赋值运算符
-	String& operator=(const String& str)
+	//************************************
+	// Method:     operator= 
+	// Description: 赋值运算符（由对象）
+	//				语句【 str1 = str2 】是调用此运算符。注意：语句【 String str1 = str2 】并未重载运算符
+	// Parameter:  const String & right - 
+	// Returns:    String - 
+	//************************************
+	String operator=(const String& right)
 	{
-		if (this != &str)
-		{
+		this->data=(char*)malloc(strlen(right.data) + 1);
+		memset(this->data, 0, strlen(right.data) + 1);
+		strcpy(this->data, right.data);
 
-		}
+		//先调用拷贝构造函数：将局部变量newStr的地址传入，将newStr的各成员数据拷贝到一个新的[临时对象]中
+		//随后返回的是[临时对象]
 		return *this;
+		//本函数结束后调用[临时对象]的析构函数结束其生命周期
 	}
 
-
-	/**
-	* 函 数 名: operator=
-	* 说    明：重载赋值运算符（由字符常量）
-	*			语句【str="123";】是调用此运算符
-	* 参    数: const char * src -
-	* 返 回 值: String& - 写成'传引用'，编译器就不会在此函数结束后调用析构函数了。
-	*/
-	String& operator=(const char* src)
+	//************************************
+	// Method:     operator= 
+	// Description: 重载赋值运算符（由字符常量）
+	//				语句【 str = "123" 】是调用此运算符
+	// Parameter:  const char * right -
+	// Returns:    String -
+	//************************************
+	String operator=(const char* right)
 	{
 		//释放原有字符串
 		free(this->data);
 		this->data = NULL;
 
 		//重新赋值：拷贝src字符串的内容
-		if (src == NULL)
+		if (right == NULL)
 		{
 			data == NULL;
 		}
 		else
 		{
-			data = (char*)malloc(strlen(src) + 1);	//加一是为了终止符'\0'
-			memset(data, 0x0, strlen(src) + 1);
-			strcpy(data, src);
+			int len = strlen(right);
+			char* temp=(char*)malloc(len + 1);	//加一是为了终止符'\0'
+			data = temp;
+			memset(data, 0x0, strlen(right) + 1);
+			strcpy(data, right);
 		}
+
+		//先调用拷贝构造函数：将局部变量newStr的地址传入，将newStr的各成员数据拷贝到一个新的[临时对象]中
+		//随后返回的是[临时对象]
 		return *this;
+		//本函数结束后调用[临时对象]的析构函数结束其生命周期
 	}
 
-	/**
-	* 函 数 名: ToCStr
-	* 说    明：String 转为 char*
-	* 返 回 值: char*
-	*/
+	//************************************
+	// Method:     operator+ 
+	// Description: 重载运算符'+'：成员函数
+	//				语句【String newStr = str + "123"】将调用此运算符 operator + ("123")
+	// Parameter:  const char * right - 
+	// Returns:    String& - 
+	//************************************
+	String operator+(const char* right)
+	{		
+		//创建新对象
+		String newStr;
+		newStr.data = (char*)malloc(strlen(this->data) + strlen(right) + 1);
+		memset(newStr.data, 0x0, strlen(this->data) + strlen(right) + 1);
+
+		//拼接
+		strcat(newStr.data, this->data);
+		strcat(newStr.data, right);
+
+		//先调用拷贝构造函数：将局部变量newStr的地址传入，将newStr的各成员数据拷贝到一个新的[临时对象]中
+		//随后调用newStr对象的析构函数结束其生命周期
+		//最后返回的是[临时对象]
+		return newStr;
+	}
+
+
+	//********TEST*********
+	String operator+(const String& str)
+	{
+		String newString;
+		if (str.data == NULL)
+		{
+			return *this;
+		}
+		else if (this->data == NULL)
+		{
+			newString = str;
+		}
+		else
+		{
+			newString.data =(char*) malloc(strlen(str.data) + strlen(this->data) + 1);
+			memset(newString.data, 0, strlen(str.data) + strlen(this->data) + 1);
+			strcat(newString.data, this->data);
+			strcat(newString.data, str.data);
+		}
+
+		//先调用拷贝构造函数：将局部变量newStr的地址传入，将newStr的各成员数据拷贝到一个新的[临时对象]中
+		//随后调用newStr对象的析构函数结束其生命周期
+		//最后返回的是[临时对象]
+		return newString;
+	}
+
+
+
+	//************************************
+	// Method:     operator+ 
+	// Description: 重载运算符'+'：友元函数
+	//				当运算符重载为类的友元函数时，没有隐含的this指针，所有的操作数都必须通过函数的形参进行传递，函数的参数与操作数自左至右一一对应。 
+	//				语句【String newStr = "123" + str】将调用此运算符 operator + ("123",str)
+	// Parameter:  const char * left - 字符常量
+	// Parameter:  const String & right - String对象
+	// Returns:    friend char*
+	//************************************
+	friend String operator+(const char* left, String& right)
+	{
+		//申请新的堆内存
+		String newStr;
+		newStr.data = (char*)malloc(strlen(left) + strlen(right.data) + 1);
+		memset(newStr.data, 0x0, strlen(left) + strlen(right.data) + 1);
+
+		//拼接
+		strcat(newStr.data, left);
+		strcat(newStr.data, right.data);
+
+		//先调用拷贝构造函数：将局部变量newStr的地址传入，将newStr的各成员数据拷贝到一个新的[临时对象]中
+		//随后调用newStr对象的析构函数结束其生命周期
+		//最后返回的是[临时对象]
+		return newStr;
+	}
+
+	//************************************
+	// Method:     ToPChar 
+	// Description: String 转为 char*
+	// Returns:    char* -  
+	//************************************
 	char* ToPChar()
 	{
 		//返回指针
@@ -119,27 +220,30 @@ public:
 
 	}
 
-	/**
-	* 函 数 名: SubString
-	* 说    明：截取字符串
-	* 参    数: char * src -
-	* 参    数: int beginIndex - 起始索引，索引从0开始。
-	* 返 回 值: String
-	*/
-	char* SubString(int beginIndex)
+	//************************************
+	// Method:     SubString 
+	// Description: 截取字符串
+	// Parameter:  int beginIndex - 起始索引，索引从0开始
+	// Returns:    char* -  
+	//************************************
+	String SubString(int beginIndex)
 	{
 		//边界检查
 		int strLen = strlen(this->data);
 		if (beginIndex > strLen) { throw  "【exception】索引越界"; }
 
-		//截取：构造一个新的char* ，
-		char* newData = (char*)malloc(strLen - beginIndex + 1);
-		memset(newData, 0x0, strLen - beginIndex + 1);
-		memcpy(newData, this->data + beginIndex, strLen - beginIndex + 1);
+		//构造一个新的String 
+		String newStr;
+		newStr.data= (char*)malloc(strLen - beginIndex + 1);
+		memset(newStr.data, 0x0, strLen - beginIndex + 1);
 
-		//返回char*后，将调用'重载赋值运算符（由字符常量）'赋值
-		//例如  String sub=str.SubString(2);将调用'重载赋值运算符（由字符常量）'赋值给sub
-		return newData;
+		//截取
+		memcpy(newStr.data, this->data + beginIndex, strLen - beginIndex + 1);
+
+		//先调用拷贝构造函数：将局部变量newStr的地址传入，将newStr的各成员数据拷贝到一个新的[临时对象]中
+		//随后调用newStr对象的析构函数结束其生命周期
+		//最后返回的是[临时对象]
+		return newStr;
 	}
 
 

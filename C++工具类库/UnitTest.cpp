@@ -3,10 +3,10 @@
 #include "String.h"
 #include "Convert.h"
 
-/**  
-* 函 数 名: ConvertTest 
+/**
+* 函 数 名: ConvertTest
 * 说    明：测试Convert
-* 返 回 值: void 
+* 返 回 值: void
 */
 void ConvertTest()
 {
@@ -28,25 +28,35 @@ void ConvertTest()
 */
 void StringTest()
 {
-	//调用普通构造函数(由字符常量)
-	String str = "ABCD";
+	//测试普通构造函数(由字符常量)
+	String str = "1234";
 
-	//调用拷贝构造函数
+	//调用拷贝构造函数（对象通过另一个对象进行初始化）
 	String str2 = str;
 
-	//调用赋值运算符(由字符常量)
-	str = "1234";
+	//测试赋值运算符(由字符常量)
+	str = "ABCDE";
 
-	//先调用substring函数，得到返回的char*，随后调用普通构造函数(由字符常量)将char*传递给新的String对象
+	//测试字符串截取
 	String subStr = str.SubString(2);
 
 	//String转为char*打印
 	printf("%s \n", subStr.ToPChar());
+
+	//测试字符串拼接
+	str = "11"+str;
+	str = str + "22";
+	str = "LL" + str+"RR";
+	str = str + "MM" + str;
+
 }
+
 
 
 void main()
 {
+
+
 	/*测试 String*/
 	StringTest();
 
