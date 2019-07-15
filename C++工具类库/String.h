@@ -16,7 +16,7 @@ public:
 	// Parameter:  const char * src - 
 	// Returns:     - 
 	//************************************
-	String(const char* src=NULL)
+	String(const char* src = NULL)
 	{
 		//复制src字符串的内容
 		if (src == NULL)
@@ -44,7 +44,7 @@ public:
 	//************************************
 	String(const String& src)
 	{
-		if (this != &src) 
+		if (this != &src)
 		{
 			//复制src字符串的内容
 			if (src.data == NULL)
@@ -82,7 +82,7 @@ public:
 	//************************************
 	String operator=(const String& right)
 	{
-		this->data=(char*)malloc(strlen(right.data) + 1);
+		this->data = (char*)malloc(strlen(right.data) + 1);
 		memset(this->data, 0, strlen(right.data) + 1);
 		strcpy(this->data, right.data);
 
@@ -113,7 +113,7 @@ public:
 		else
 		{
 			int len = strlen(right);
-			char* temp=(char*)malloc(len + 1);	//加一是为了终止符'\0'
+			char* temp = (char*)malloc(len + 1);	//加一是为了终止符'\0'
 			data = temp;
 			memset(data, 0x0, strlen(right) + 1);
 			strcpy(data, right);
@@ -127,13 +127,13 @@ public:
 
 	//************************************
 	// Method:     operator+ 
-	// Description: 重载运算符'+'：成员函数
+	// Description: 重载运算符'+'：成员函数(由字符常量)
 	//				语句【String newStr = str + "123"】将调用此运算符 operator + ("123")
 	// Parameter:  const char * right - 
 	// Returns:    String& - 
 	//************************************
 	String operator+(const char* right)
-	{		
+	{
 		//创建新对象
 		String newStr;
 		newStr.data = (char*)malloc(strlen(this->data) + strlen(right) + 1);
@@ -150,24 +150,32 @@ public:
 	}
 
 
-	//********TEST*********
-	String operator+(const String& str)
+	//************************************
+	// Method:     operator+ 
+	// Description: 重载运算符'+'：成员函数(由对象)
+	// Parameter:  const String & str - 
+	// Returns:    String - 
+	//************************************
+	String operator+(const String& right)
 	{
 		String newString;
-		if (str.data == NULL)
-		{
-			return *this;
+
+		//只要左右有一边为NULL空串，就不需要拼接
+		if (right.data == NULL)
+		{ 
+			return *this; 
 		}
 		else if (this->data == NULL)
-		{
-			newString = str;
+		{ 
+			newString = right;
 		}
 		else
 		{
-			newString.data =(char*) malloc(strlen(str.data) + strlen(this->data) + 1);
-			memset(newString.data, 0, strlen(str.data) + strlen(this->data) + 1);
+			//拼接
+			newString.data = (char*)malloc(strlen(right.data) + strlen(this->data) + 1);
+			memset(newString.data, 0, strlen(right.data) + strlen(this->data) + 1);
 			strcat(newString.data, this->data);
-			strcat(newString.data, str.data);
+			strcat(newString.data, right.data);
 		}
 
 		//先调用拷贝构造函数：将局部变量newStr的地址传入，将newStr的各成员数据拷贝到一个新的[临时对象]中
@@ -234,7 +242,7 @@ public:
 
 		//构造一个新的String 
 		String newStr;
-		newStr.data= (char*)malloc(strLen - beginIndex + 1);
+		newStr.data = (char*)malloc(strLen - beginIndex + 1);
 		memset(newStr.data, 0x0, strLen - beginIndex + 1);
 
 		//截取
