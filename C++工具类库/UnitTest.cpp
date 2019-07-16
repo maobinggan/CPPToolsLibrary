@@ -11,6 +11,7 @@
 void ConvertTest()
 {
 	//测试：32位、8位 无符号数转为有符号数字符串
+	printf("\n测试Convert... \n");
 	UINT32 uInt32 = 0x80000001;		//三十二位无符号数 8000 0001 -> 有符号数 -7FFF FFFF
 	UINT8 uInt8 = 0x81;				//八位无符号数 81 -> 有符号数 -7F
 	char uInt32Str[20] = { 0 };
@@ -28,6 +29,7 @@ void ConvertTest()
 */
 void StringTest()
 {
+	printf("\n测试String... \n");
 	//测试普通构造函数(由字符常量)
 	String str = "1234";
 
@@ -44,7 +46,7 @@ void StringTest()
 	str2 = subStr;
 
 	//String转为char*打印
-	printf("%s \n", subStr.GetCStr());
+	printf("%s \n", subStr.GetPChar());
 
 	//测试字符串拼接
 	str = "11" + str;
