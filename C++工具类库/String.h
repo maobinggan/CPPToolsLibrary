@@ -23,7 +23,7 @@ public:
 		//
 		if (src == NULL)
 		{
-			this->data == NULL;
+			this->data = NULL;
 		}
 		else
 		{
@@ -62,7 +62,7 @@ public:
 			//复制src字符串的内容
 			if (src.data == NULL)
 			{
-				this->data == NULL;
+				this->data = NULL;
 			}
 			else
 			{
@@ -126,7 +126,7 @@ public:
 		//重新赋值：拷贝src字符串的内容
 		if (right == NULL)
 		{
-			data == NULL;
+			data = NULL;
 		}
 		else
 		{
