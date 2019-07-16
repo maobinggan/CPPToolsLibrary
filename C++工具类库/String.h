@@ -1,5 +1,6 @@
 #pragma once
 #include<iostream>
+#include <stdarg.h>
 
 class String
 {
@@ -223,7 +224,7 @@ public:
 	//************************************
 	char* ToPChar()
 	{
-		//返回指针
+		//返回指针的值
 		return this->data;
 	}
 
@@ -255,6 +256,33 @@ public:
 		//先调用拷贝构造函数：将局部变量newStr的地址传入，将newStr的各成员数据拷贝到一个新的[临时对象]中
 		//随后调用newStr对象的析构函数结束其生命周期
 		//最后返回的是[临时对象]
+		return newStr;
+	}
+
+	//************************************
+	// Method:     Format 
+	// Description:格式化创建String对象（通过封装sprintf实现）
+	// Parameter:  const char * format - 
+	// Parameter:  ... - 可变参数
+	// Returns:    String - 
+	//************************************
+	static String Format(const char* format, ...)
+	{
+		//申请一个足够大的字符数组
+#define MAXSIZE_BUFFER 1024
+		char newData[MAXSIZE_BUFFER];		//数组存放于栈中，函数结束自动释放
+		memset(newData, 1, MAXSIZE_BUFFER);	//数组需初始化为非零
+
+		//调用普通构造函数(由字符常量)，实例化一个String对象
+		String newStr = newData;
+
+		//封装sprintf()函数
+		va_list args;
+		va_start(args, format);
+		vsprintf(newStr.data, format, args); //vsprintf()是一个为了封装sprintf()函数的中间接口
+		va_end(args);
+
+		//
 		return newStr;
 	}
 

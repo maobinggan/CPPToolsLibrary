@@ -47,16 +47,18 @@ void StringTest()
 	printf("%s \n", subStr.ToPChar());
 
 	//测试字符串拼接
-	str = "11"+str;
+	str = "11" + str;
 	str = str + "22";
-	str = "LL" + str+"RR";
+	str = "LL" + str + "RR";
 	str = str + "_MM_" + str;
 
 	//测试大小写转换
 	str = "AbCd";
-	str=str.ToUpper();
-	str=str.ToLower();
+	str = str.ToUpper();
+	str = str.ToLower();
 
+	//测试格式化创建String
+	String formatStr = String::Format("%08X", 0x123ABC);
 }
 
 
