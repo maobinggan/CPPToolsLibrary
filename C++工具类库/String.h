@@ -213,7 +213,7 @@ public:
 	// Parameter:  const String & right - String对象
 	// Returns:    friend char*
 	//************************************
-	friend String operator+(const char* left, String& right)
+	friend String operator+(const char* left, String right)
 	{
 		//申请新的堆内存
 		String newStr;
