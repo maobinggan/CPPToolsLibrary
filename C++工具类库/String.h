@@ -19,15 +19,26 @@ public:
 	//************************************
 	String(const char* src = NULL)
 	{
-		//复制src字符串的内容
+		//
 		if (src == NULL)
 		{
 			this->data == NULL;
 		}
 		else
 		{
-			this->data = (char*)malloc(strlen(src) + 1);	//加一是为了终止符'\0'
-			memset(this->data, 0x0, strlen(src) + 1);
+			//申请内存：防止申请到的内存与src的内存重复。（观察到：当src的类型是char*，且src是由临时对象产生的，那么第一次malloc的地址可能与src重复）
+			while (true)
+			{
+				this->data = (char*)malloc(strlen(src) + 1);	//加一是为了终止符'\0'
+				if (this->data != src)
+				{
+					memset(this->data, 0x0, strlen(src) + 1);
+					break;
+				}
+				free(this->data);
+			}
+
+			//复制字符串
 			strcpy(this->data, src);
 		}
 
@@ -65,7 +76,8 @@ public:
 	//************************************
 	// Method:     ~String 
 	// Description: 析构函数
-	//				当对象生命周期结束时调用(当函数return时，存于栈内的对象自动调用析构函数，存于堆中的对象(即new出来的)需要手动delete)
+	//				当对象生命周期结束时调用(当函数return时，存于栈内的对象自动调用析构函数，存于堆中的对象(即new出来的)需要手动delete)。
+	//				当自动产生的临时对象使用完毕后，自动析构。
 	// Returns:     -  
 	//************************************
 	~String()
@@ -218,13 +230,17 @@ public:
 	}
 
 	//************************************
-	// Method:     ToPChar 
-	// Description: String 转为 char*
-	// Returns:    char* -  
+	// Method:     GetData 
+	// Description:获取当前对象的const char*类型的data指针
+	// Returns:    const char* -  
 	//************************************
-	char* ToPChar()
+	char* GetPChar()
 	{
-		//返回指针的值
+
+		//如果返回类型改为const char* ，那么即使普通构造函数传入的char*是由临时对象产生的，其申请的地址也不会出现重复的现象。
+		//但考虑到返回const类型可能会使得其他逻辑变得不方便，所以仍使用char*
+		//return (const char*)this->data;
+
 		return this->data;
 	}
 

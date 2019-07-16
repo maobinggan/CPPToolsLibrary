@@ -44,7 +44,7 @@ void StringTest()
 	str2 = subStr;
 
 	//String转为char*打印
-	printf("%s \n", subStr.ToPChar());
+	printf("%s \n", subStr.GetCStr());
 
 	//测试字符串拼接
 	str = "11" + str;
@@ -66,6 +66,7 @@ void StringTest()
 	else { printf("不相同 \n"); }
 	if (strcmp.Equals(strcmp)) { printf("相同 \n"); }
 	else { printf("不相同 \n"); }
+
 }
 
 
