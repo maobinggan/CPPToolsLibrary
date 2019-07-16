@@ -59,6 +59,13 @@ void StringTest()
 
 	//测试格式化创建String
 	String formatStr = String::Format("%08X", 0x123ABC);
+
+	//测试String的值比较
+	String strcmp = "ABC";
+	if (strcmp.Equals("ABCD")) { printf("相同 \n"); }
+	else { printf("不相同 \n"); }
+	if (strcmp.Equals(strcmp)) { printf("相同 \n"); }
+	else { printf("不相同 \n"); }
 }
 
 

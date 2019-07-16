@@ -260,6 +260,42 @@ public:
 	}
 
 	//************************************
+	// Method:     Equals 
+	// Description:值的比较(由字符常量)
+	// Parameter:  const char * dest - 
+	// Returns:    bool - 
+	//************************************
+	bool Equals(const char* dest)
+	{
+		if (strcmp(this->data, dest) == 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	//************************************
+	// Method:     Equals 
+	// Description:值的比较(由对象)
+	// Parameter:  String dest - 
+	// Returns:    bool - 
+	//************************************
+	bool Equals(String dest)
+	{
+		if (strcmp(this->data, dest.data) == 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	//************************************
 	// Method:     Format 
 	// Description:格式化创建String对象（通过封装sprintf实现）
 	// Parameter:  const char * format - 
