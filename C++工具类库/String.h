@@ -143,6 +143,19 @@ public:
 		//[临时对象]使用完毕后被析构
 	}
 
+
+	//************************************
+	// Method:     operator== 
+	// Description:比较地址
+	// Parameter:  String right - 
+	// Returns:    bool - 
+	//************************************
+	bool operator==(String right)
+	{
+		if (this->data == right.data) { return true; }
+		else { return false; }
+	}
+
 	//************************************
 	// Method:     operator+ 
 	// Description: 重载运算符'+'：成员函数(由字符常量)
@@ -285,37 +298,22 @@ public:
 
 	//************************************
 	// Method:     Equals 
-	// Description:值的比较(由字符常量)
-	// Parameter:  const char * dest - 
-	// Returns:    bool - 
-	//************************************
-	bool Equals(const char* dest)
-	{
-		if (strcmp(this->data, dest) == 0)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	//************************************
-	// Method:     Equals 
-	// Description:值的比较(由对象)
+	// Description:值的比较
+	//				语句【 str1.equals("123") 】和【str1.equals(str2) 】都调用此函数，其中"123"是先调用普通构造，再调用equals()
 	// Parameter:  String dest - 
 	// Returns:    bool - 
 	//************************************
 	bool Equals(String dest)
 	{
-		if (strcmp(this->data, dest.data) == 0)
-		{
-			return true;
-		}
-		else
+		//先比较长度
+		if (strlen(this->data) != strlen(dest.data))
 		{
 			return false;
+		}
+		//再比较值
+		else
+		{
+			return strcmp(this->data, dest.data) == 0 ? true : false;
 		}
 	}
 
