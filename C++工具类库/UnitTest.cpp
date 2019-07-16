@@ -40,6 +40,9 @@ void StringTest()
 	//测试字符串截取
 	String subStr = str.SubString(2);
 
+	//测试赋值运算符(由对象)
+	str2 = subStr;
+
 	//String转为char*打印
 	printf("%s \n", subStr.ToPChar());
 
@@ -47,7 +50,12 @@ void StringTest()
 	str = "11"+str;
 	str = str + "22";
 	str = "LL" + str+"RR";
-	str = str + "MM" + str;
+	str = str + "_MM_" + str;
+
+	//测试大小写转换
+	str = "AbCd";
+	str=str.ToUpper();
+	str=str.ToLower();
 
 }
 

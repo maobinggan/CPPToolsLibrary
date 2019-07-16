@@ -76,12 +76,16 @@ public:
 	//************************************
 	// Method:     operator= 
 	// Description: 赋值运算符（由对象）
-	//				语句【 str1 = str2 】是调用此运算符。注意：语句【 String str1 = str2 】并未重载运算符
+	//				语句【 str1 = str2 】是调用此运算符。注意：语句【 String str1 = str2 】并未使用运算符重载，而是调用了拷贝构造。
 	// Parameter:  const String & right - 
 	// Returns:    String - 
 	//************************************
 	String operator=(const String& right)
 	{
+		//释放
+		free(this->data);
+		this->data = NULL;
+		//赋值
 		this->data = (char*)malloc(strlen(right.data) + 1);
 		memset(this->data, 0, strlen(right.data) + 1);
 		strcpy(this->data, right.data);
@@ -162,11 +166,11 @@ public:
 
 		//只要左右有一边为NULL空串，就不需要拼接
 		if (right.data == NULL)
-		{ 
-			return *this; 
+		{
+			return *this;
 		}
 		else if (this->data == NULL)
-		{ 
+		{
 			newString = right;
 		}
 		else
@@ -254,43 +258,44 @@ public:
 		return newStr;
 	}
 
-
 	//************************************
-	// Method:     ToUpper
+	// Method:     ToUpper 
 	// Description:转为大写字母str
-	// Parameter:  char * src - 
-	// Returns:    void - 
+	// Returns:    String - 
 	//************************************
-	static void ToUpper(char* src)
+	String ToUpper()
 	{
-		char* cursor = src;
+		String newStr = String(this->data);
+		char* cursor = newStr.data;
 		while (*cursor != 0)
 		{
-			if (*cursor > 'a' && *cursor < 'z')
+			if (*cursor >= 'a' && *cursor <= 'z')
 			{
 				*cursor -= 32;//根据ASCII码
 			}
 			cursor++;
 		}
+		return newStr;
 	}
 
 	//************************************
-	// Method:     ToLower
+	// Method:     ToLower 
 	// Description:转为小写字母str
-	// Parameter:  char * src - 
-	// Returns:    void - 
+	// Returns:    String - 
 	//************************************
-	static void ToLower(char* src)
+	String ToLower()
 	{
-		char* cursor = src;
+		String newStr = String(this->data);
+		char* cursor = newStr.data;
 		while (*cursor != 0)
 		{
-			if (*cursor > 'A' && *cursor < 'Z')
+			if (*cursor >= 'A' && *cursor <= 'Z')
 			{
-				*cursor += 32; //根据ASCII码
+				*cursor += 32;//根据ASCII码
 			}
 			cursor++;
 		}
+		return newStr;
 	}
 };
 
