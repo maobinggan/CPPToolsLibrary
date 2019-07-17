@@ -1,5 +1,5 @@
 #pragma once
-#include<iostream>
+#include <iostream>
 #include <stdarg.h>
 
 /* 应避免链式调用 */
@@ -99,11 +99,17 @@ public:
 		//释放
 		free(this->data);
 		this->data = NULL;
-		//赋值
-		this->data = (char*)malloc(strlen(right.data) + 1);
-		memset(this->data, 0, strlen(right.data) + 1);
-		strcpy(this->data, right.data);
+		if (right.data == NULL)
+		{
 
+		}
+		else
+		{
+			//赋值
+			this->data = (char*)malloc(strlen(right.data) + 1);
+			memset(this->data, 0, strlen(right.data) + 1);
+			strcpy(this->data, right.data);
+		}
 		//先调用拷贝构造函数：将局部变量newStr的地址传入，将newStr的各成员数据拷贝到一个新的[临时对象]中
 		//随后返回的是[临时对象]
 		return *this;
@@ -305,6 +311,7 @@ public:
 	//************************************
 	bool Equals(String dest)
 	{
+
 		//先比较长度
 		if (strlen(this->data) != strlen(dest.data))
 		{
@@ -315,6 +322,8 @@ public:
 		{
 			return strcmp(this->data, dest.data) == 0 ? true : false;
 		}
+
+
 	}
 
 	//************************************
