@@ -337,8 +337,9 @@ public:
 	{
 		//申请一个足够大的字符数组
 #define MAXSIZE_BUFFER 1024
-		char newData[MAXSIZE_BUFFER];		//数组存放于栈中，函数结束自动释放
-		memset(newData, 1, MAXSIZE_BUFFER);	//数组需初始化为非零
+		char newData[MAXSIZE_BUFFER];			//数组存放于栈中，函数结束自动释放
+		memset(newData, 1, MAXSIZE_BUFFER - 1);	//为字符串数组填充数据占用空间
+		newData[MAXSIZE_BUFFER - 1] = '\0';			//末尾增加一个字符串终结符
 
 		//调用普通构造函数(由字符常量)，实例化一个String对象
 		String newStr = newData;
