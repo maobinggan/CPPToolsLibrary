@@ -163,6 +163,18 @@ public:
 	}
 
 	//************************************
+	// Method:     operator!= 
+	// Description:比较地址
+	// Parameter:  String right - 
+	// Returns:    bool - 
+	//************************************
+	bool operator!=(String right)
+	{
+		if (this->data != right.data) { return true; }
+		else { return false; }
+	}
+
+	//************************************
 	// Method:     operator+ 
 	// Description: 重载运算符'+'：成员函数(由字符常量)
 	//				语句【String newStr = str + "123"】将调用此运算符 operator + ("123")
