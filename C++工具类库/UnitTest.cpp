@@ -41,6 +41,7 @@ void StringTest()
 
 	//测试字符串截取
 	String subStr = str.SubString(2);
+	subStr = str.SubString(1,3);
 
 	//测试赋值运算符(由对象)
 	str2 = subStr;

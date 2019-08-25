@@ -283,9 +283,32 @@ public:
 		return this->data;
 	}
 
-	char* SubString(int beginIndex, int endIndex)
+	//************************************
+	// Method:     SubString 
+	// Description:截取字符串
+	// Parameter:  int beginIndex - 起始索引，索引从0开始
+	// Parameter:  int endIndex - 结束索引
+	// Returns:    String - 
+	//************************************
+	String SubString(int beginIndex, int endIndex)
 	{
+		//边界检查
+		int strLen = strlen(this->data);			//有效字符的长度
+		if (beginIndex > strLen || endIndex < 0) { throw  "【exception】索引越界"; }
 
+		//构造一个新的String 
+		String newStr;
+		int destLen = endIndex - beginIndex + 1;	//有效字符的长度
+		newStr.data = (char*)malloc(destLen + 1);	//多申请一个位置，用于存放终结符
+		memset(newStr.data, 0x0, destLen + 1);
+
+		//拷贝
+		memcpy(newStr.data, this->data + beginIndex, destLen);
+
+		//先调用拷贝构造函数：将局部变量newStr的地址传入，将newStr的各成员数据拷贝到一个新的[临时对象String]中
+		//随后调用newStr对象的析构函数结束其生命周期
+		//最后返回的是[临时对象String]
+		return newStr;
 	}
 
 	//************************************
@@ -297,16 +320,17 @@ public:
 	String SubString(int beginIndex)
 	{
 		//边界检查
-		int strLen = strlen(this->data);
+		int strLen = strlen(this->data);			//有效字符的长度
 		if (beginIndex > strLen) { throw  "【exception】索引越界"; }
 
 		//构造一个新的String 
 		String newStr;
-		newStr.data = (char*)malloc(strLen - beginIndex + 1);
-		memset(newStr.data, 0x0, strLen - beginIndex + 1);
+		int destLen = strLen - beginIndex + 1;		//有效字符的长度
+		newStr.data = (char*)malloc(destLen + 1);	//多申请一个位置，用于存放终结符
+		memset(newStr.data, 0x0, destLen + 1);
 
 		//截取
-		memcpy(newStr.data, this->data + beginIndex, strLen - beginIndex + 1);
+		memcpy(newStr.data, this->data + beginIndex, destLen);
 
 		//先调用拷贝构造函数：将局部变量newStr的地址传入，将newStr的各成员数据拷贝到一个新的[临时对象]中
 		//随后调用newStr对象的析构函数结束其生命周期
