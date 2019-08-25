@@ -298,7 +298,7 @@ public:
 
 		//构造一个新的String 
 		String newStr;
-		int destLen = endIndex - beginIndex + 1;	//有效字符的长度
+		int destLen = endIndex - beginIndex;	//有效字符的长度
 		newStr.data = (char*)malloc(destLen + 1);	//多申请一个位置，用于存放终结符
 		memset(newStr.data, 0x0, destLen + 1);
 
