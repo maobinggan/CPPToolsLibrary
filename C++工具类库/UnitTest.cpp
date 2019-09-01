@@ -1,24 +1,24 @@
 #pragma once
 #include "iostream"
 #include "String.h"
-#include "Convert.h"
+#include "SignedINT.h"
 
 /**
-* 函 数 名: ConvertTest
-* 说    明：测试Convert
+* 函 数 名: Test_SignedINT
+* 说    明：测试SignedINT
 * 返 回 值: void
 */
-void ConvertTest()
+void Test_SignedINT()
 {
 	//测试：32位、8位 无符号数转为有符号数字符串
 	printf("\n测试Convert... \n");
 	UINT32 uInt32 = 0x80000001;		//三十二位无符号数 8000 0001 -> 有符号数 -7FFF FFFF
 	UINT8 uInt8 = 0x81;				//八位无符号数 81 -> 有符号数 -7F
-	char uInt32Str[20] = { 0 };
-	char uInt8Str[20] = { 0 };
-	Convert::ToInt32Str(uInt32, uInt32Str);
-	Convert::ToInt8Str(uInt8, uInt8Str);
-	printf("signed int32 = %s  signed int8 =%s \n", uInt32Str, uInt8Str);
+
+	SignedINT SignedInt32 = SignedINT::GetInt32(uInt32);
+	SignedINT SignedInt8 = SignedINT::GetInt8(uInt8);
+
+	printf("signed int32 = %c%08llX  signed int8 =%c%02X \n", SignedInt32.symbol, SignedInt32.digit, SignedInt8.symbol, SignedInt8.digit);
 
 }
 
@@ -41,7 +41,7 @@ void StringTest()
 
 	//测试字符串截取
 	String subStr = str.SubString(2);
-	subStr = str.SubString(1,3);
+	subStr = str.SubString(1, 3);
 
 	//测试赋值运算符(由对象)
 	str2 = subStr;
@@ -79,10 +79,10 @@ void main()
 
 
 	/*测试 String*/
-	StringTest();
+	//StringTest();
 
 	/*测试 Convert*/
-	ConvertTest();
+	Test_SignedINT();
 
 	system("pause");
 }
